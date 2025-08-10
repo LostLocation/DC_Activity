@@ -29,20 +29,23 @@ h1 {
 }
 
 .game-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: block;
+  text-align: center;
   margin-bottom: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   padding: 15px;
   border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .player-info {
   background: rgba(255, 255, 255, 0.2);
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 8px;
   border: 2px solid #4CAF50;
+  margin: 5px auto;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .current-player {
@@ -257,16 +260,20 @@ h1 {
 }
 
 .opponents-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  display: block;
+  text-align: center;
   margin: 20px 0;
 }
 
 .opponent {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   padding: 15px;
+  margin: 10px auto;
+  width: 200px;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: top;
 }
 
 .opponent.current-turn {
@@ -290,15 +297,16 @@ h1 {
 }
 
 .deck-area {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  align-items: center;
+  display: block;
+  text-align: center;
   margin: 20px 0;
 }
 
 .deck, .discard {
   text-align: center;
+  display: inline-block;
+  margin: 0 15px;
+  vertical-align: top;
 }
 
 .deck-tile, .discard-tile {
@@ -306,10 +314,13 @@ h1 {
   height: 70px;
   margin: 0 auto 10px;
   background: #333;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 2px solid #555;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .deck-tile:hover, .discard-tile:hover {
