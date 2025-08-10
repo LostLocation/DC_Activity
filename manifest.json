@@ -5,6 +5,7 @@
   "build_id": "1",
   "description": "Test amaçlı basit activity oyunu.",
   "icon": "icon.png",
+  "launch_url": "https://lostlocation.github.io/discord-activity-test/index.html",
   "install_params": {
     "scopes": ["applications.commands"]
   },
