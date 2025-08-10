@@ -122,38 +122,45 @@ function createTileElement(tile, container = 'hand') {
   return tileDiv;
 }
 
-// Select tile
-function selectTile(tile, element) {
-  console.log('selectTile çağrıldı:', tile); // Debug için
+// Discord uyumlu basit taş seçimi
+function selectTileSimple(tile, element) {
+  console.log('selectTileSimple çağrıldı:', tile);
   
-  // Deselect previous tile
-  const prevSelected = document.querySelector('.tile.selected');
-  if (prevSelected) {
-    prevSelected.classList.remove('selected');
-  }
+  // Önceki seçimi temizle
+  const allTiles = document.querySelectorAll('.tile.in-hand');
+  allTiles.forEach(t => {
+    t.classList.remove('selected');
+    t.style.borderColor = '#333';
+    t.style.transform = 'translateY(0px)';
+  });
   
-  // Select new tile
+  // Yeni seçimi işaretle
   element.classList.add('selected');
+  element.style.borderColor = '#FF6B6B';
+  element.style.transform = 'translateY(-8px)';
+  element.style.boxShadow = '2px 8px 16px rgba(255, 107, 107, 0.4)';
+  
   selectedTile = tile;
   addMessage(`🎯 ${tile.color} ${tile.number} taşını seçtin. Enter/Space ile at!`);
   
-  // Atma butonunu aktif et
-  enableDiscardButton();
+  // Atma butonunu göster
+  showDiscardButton();
 }
 
-// Atma butonu ekle
-function enableDiscardButton() {
-  // Kontrollere atma butonu ekle
+// Atma butonunu göster/gizle
+function showDiscardButton() {
   let discardBtn = document.getElementById('discardBtn');
   if (!discardBtn) {
     discardBtn = document.createElement('button');
     discardBtn.id = 'discardBtn';
     discardBtn.className = 'btn btn-danger';
-    discardBtn.innerHTML = '🗑️ Taşı At';
+    discardBtn.innerHTML = '🗑️ Seçili Taşı At';
     discardBtn.onclick = discardTile;
-    document.querySelector('.controls').appendChild(discardBtn);
+    
+    const controls = document.querySelector('.controls');
+    controls.insertBefore(discardBtn, controls.firstChild);
   }
-  discardBtn.style.display = selectedTile ? 'block' : 'none';
+  discardBtn.style.display = selectedTile ? 'inline-block' : 'none';
 }
 
 // Render the game board
@@ -163,14 +170,71 @@ function renderBoard() {
   updateGameInfo();
 }
 
-// Render player's hand
+// Render player's hand - Discord uyumlu versiyon
 function renderPlayerHand() {
   const handElement = document.getElementById('playerHand');
-  handElement.innerHTML = '';
   
-  players[0].hand.forEach(tile => {
-    handElement.appendChild(createTileElement(tile, 'hand'));
+  // innerHTML yerine tek tek element oluştur
+  while (handElement.firstChild) {
+    handElement.removeChild(handElement.firstChild);
+  }
+  
+  console.log('Oyuncu elindeki taş sayısı:', players[0].hand.length); // Debug
+  
+  players[0].hand.forEach((tile, index) => {
+    console.log(`Taş ${index + 1}:`, tile); // Debug
+    
+    // Basit div oluştur
+    const tileDiv = document.createElement('div');
+    tileDiv.className = 'tile in-hand';
+    
+    // Discord için daha güvenli stil atama
+    if (tile.isJoker) {
+      tileDiv.style.cssText = `
+        background-image: url('images/okey.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      `;
+    } else {
+      const imageFile = `${tile.color}${tile.number}.png`;
+      tileDiv.style.cssText = `
+        background-image: url('images/${imageFile}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      `;
+      console.log(`Taş görseli: images/${imageFile}`); // Debug
+    }
+    
+    // Data attributeleri
+    tileDiv.setAttribute('data-tile-id', tile.id);
+    tileDiv.setAttribute('data-color', tile.color);
+    tileDiv.setAttribute('data-number', tile.number.toString());
+    
+    // Event listener - Discord için daha basit
+    tileDiv.onclick = function() {
+      console.log('Taş tıklandı (onclick):', tile);
+      selectTileSimple(tile, tileDiv);
+    };
+    
+    // Hover efekti için
+    tileDiv.onmouseenter = function() {
+      this.style.transform = 'translateY(-5px)';
+      this.style.borderColor = '#FFD700';
+    };
+    
+    tileDiv.onmouseleave = function() {
+      if (!this.classList.contains('selected')) {
+        this.style.transform = 'translateY(0px)';
+        this.style.borderColor = '#333';
+      }
+    };
+    
+    handElement.appendChild(tileDiv);
   });
+  
+  console.log('Render tamamlandı, DOM elementleri:', handElement.children.length);
 }
 
 // Render opponents
@@ -263,9 +327,9 @@ function drawFromDiscard() {
   renderBoard();
 }
 
-// Discard selected tile
+// Discard selected tile - güncellenmiş versiyon
 function discardTile() {
-  console.log('discardTile çağrıldı, selectedTile:', selectedTile); // Debug için
+  console.log('discardTile çağrıldı, selectedTile:', selectedTile);
   
   if (!selectedTile) {
     addMessage("❌ Önce bir taş seç!");
