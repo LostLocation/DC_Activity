@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okey Oyunu - Discord Activity</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🎮 OKEY OYUNU</h1>
+        </div>
+
+        <div class="game-info">
+            <div class="info-item">
+                <div class="info-label">Tur</div>
+                <div class="info-value" id="turn-count">-</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Eldeki Taş</div>
+                <div class="info-value" id="hand-count">-</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Yığında Kalan</div>
+                <div class="info-value" id="pile-count">-</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Durum</div>
+                <div class="info-value" id="game-status">Oyun Yok</div>
+            </div>
+        </div>
+
+        <div class="pile-info">
+            <div class="pile-stack">
+                <div class="pile-count" id="draw-pile">📚 Yığın</div>
+                <div>Taş Çek</div>
+            </div>
+            <div class="pile-stack">
+                <div class="pile-count">🗑️ Atılan</div>
+                <div id="last-discarded" class="discarded-tile" style="display: none;"></div>
+                <div id="no-discarded">Henüz yok</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" id="start-game">Yeni Oyun Başlat</button>
+            <button class="btn btn-secondary" id="draw-tile" disabled>Taş Çek</button>
+            <button class="btn btn-warning" id="discard-tile" disabled>Seçili Taşı At</button>
+            <button class="btn btn-primary" id="win-game" disabled>Biti Yap</button>
+            <button class="btn btn-danger" id="end-game" disabled>Oyunu Bitir</button>
+        </div>
+
+        <div class="hand-container">
+            <div class="hand-title">✋ Eliniz (Atmak için tıklayın)</div>
+            <div class="hand" id="player-hand">
+                <div style="color: rgba(255,255,255,0.5); text-align: center; width: 100%;">
+                    Oyun başlatmak için "Yeni Oyun Başlat" butonuna tıklayın
+                </div>
+            </div>
+        </div>
+
+        <div class="messages" id="messages">
+            <div class="message info">🎮 Okey oyununa hoş geldiniz! Yeni oyun başlatarak oynamaya başlayın.</div>
+        </div>
+
+        <div class="game-rules">
+            <div class="rules-title">📋 Oyun Kuralları:</div>
+            • <strong>Amaç:</strong> Dörtlü (aynı sayıdan 4 farklı renk) ve sıralı gruplar yapın<br>
+            • <strong>Biti:</strong> En az 1 dörtlü + kalan taşları gruplar halinde organize edin<br>
+            • <strong>Joker:</strong> Herhangi bir taş yerine kullanılabilir (🃏)<br>
+            • <strong>Renkler:</strong> 🔴Kırmızı 🔵Mavi 🟡Sarı ⚫Siyah<br>
+            • <strong>Oynayış:</strong> Sırayla taş çekin ve atın, biti yapmaya çalışın!
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
