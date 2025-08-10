@@ -2,35 +2,79 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Okey</title>
-  <style>
-    body {
-      background-image: url('images/background image.jpg');
-      background-size: cover;
-      color: white;
-      font-family: sans-serif;
-      text-align: center;
-    }
-    #gameBoard {
-      /* Okey board styling */
-    }
-    .tile {
-      width: 50px;
-      height: 75px;
-      background-size: cover;
-      display: inline-block;
-    }
-    /* You would need to add specific styles for each tile color */
-    .black-tile { background-image: url('images/black1.png'); }
-    .yellow-tile { background-image: url('images/yellow1.png'); }
-    .red-tile { background-image: url('images/red1.png'); }
-    .green-tile { background-image: url('images/green1.png'); }
-  </style>
+  <title>Discord Okey</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Discord Okey</h1>
-  <div id="gameBoard">
+  <div class="game-container">
+    <h1>🎮 Discord Okey</h1>
+    
+    <div class="game-info">
+      <div class="player-info current-player">
+        <strong>Sen: Oyuncu 1</strong><br>
+        <span>El: <span id="playerTileCount">14</span> taş</span>
+      </div>
+      <div class="player-info">
+        <strong>Tur: <span id="currentTurn">1</span></strong><br>
+        <span>Gösterge: <span id="indicatorTile">🃏</span></span>
+      </div>
+      <div class="player-info">
+        <strong>Kalan Taş: <span id="remainingTiles">106</span></strong>
+      </div>
     </div>
+
+    <div class="opponents-section">
+      <div class="opponent" id="opponent1">
+        <strong>Oyuncu 2</strong>
+        <div class="opponent-tiles" id="opponent1Tiles"></div>
+        <div>El: <span class="opponent-count">14</span> taş</div>
+      </div>
+      <div class="opponent" id="opponent2">
+        <strong>Oyuncu 3</strong>
+        <div class="opponent-tiles" id="opponent2Tiles"></div>
+        <div>El: <span class="opponent-count">14</span> taş</div>
+      </div>
+      <div class="opponent" id="opponent3">
+        <strong>Oyuncu 4</strong>
+        <div class="opponent-tiles" id="opponent3Tiles"></div>
+        <div>El: <span class="opponent-count">14</span> taş</div>
+      </div>
+    </div>
+
+    <div class="deck-area">
+      <div class="deck">
+        <div class="deck-tile" id="deckTile" onclick="drawFromDeck()"></div>
+        <div class="deck-count">Deste: <span id="deckCount">106</span></div>
+      </div>
+      <div class="discard">
+        <div class="discard-tile" id="discardTile" onclick="drawFromDiscard()"></div>
+        <div class="deck-count">Atık: <span id="discardCount">0</span></div>
+      </div>
+    </div>
+
+    <div id="gameBoard">
+      <div class="board-section">
+        <div class="section-title">🎯 Senin Elin</div>
+        <div class="tile-row" id="playerHand"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-primary" onclick="sortHand()" id="sortBtn">🔄 Sırala</button>
+      <button class="btn btn-success" onclick="checkWin()" id="winBtn">🏆 Bitir</button>
+      <button class="btn btn-warning" onclick="showHint()" id="hintBtn">💡 İpucu</button>
+      <button class="btn btn-danger" onclick="resetGame()" id="resetBtn">🔄 Yeni Oyun</button>
+    </div>
+
+    <div class="game-messages">
+      <div class="section-title">📢 Oyun Mesajları</div>
+      <div id="messages">
+        <div class="message">🎮 Oyun başladı! İyi şanslar!</div>
+        <div class="message">🎯 Sıra sende. Bir taş çek veya at.</div>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
