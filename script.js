@@ -88,20 +88,33 @@ function dealTiles() {
 // Create tile element
 function createTileElement(tile, container = 'hand') {
   const tileDiv = document.createElement('div');
-  tileDiv.className = `tile ${tile.color}-tile in-${container}`;
-  tileDiv.dataset.tileId = tile.id;
   
   if (tile.isJoker) {
-    tileDiv.className = 'tile joker-tile in-' + container;
+    tileDiv.className = `tile joker-tile in-${container}`;
+  } else {
+    // Her taş için özel CSS class kullan (örnek: red-7, yellow-5)
+    tileDiv.className = `tile ${tile.color}-${tile.number} in-${container}`;
   }
   
-  const numberDiv = document.createElement('div');
-  numberDiv.className = 'tile-number';
-  numberDiv.textContent = tile.isJoker ? '🃏' : tile.number;
-  tileDiv.appendChild(numberDiv);
+  tileDiv.dataset.tileId = tile.id;
+  tileDiv.dataset.color = tile.color;
+  tileDiv.dataset.number = tile.number;
+  
+  // Sayı göstermeye gerek yok, görsel zaten var
+  // const numberDiv = document.createElement('div');
+  // numberDiv.className = 'tile-number';
+  // numberDiv.textContent = tile.isJoker ? '🃏' : tile.number;
+  // tileDiv.appendChild(numberDiv);
   
   if (container === 'hand') {
-    tileDiv.addEventListener('click', () => selectTile(tile, tileDiv));
+    tileDiv.addEventListener('click', function() {
+      console.log('Taş tıklandı:', tile); // Debug için
+      selectTile(tile, tileDiv);
+    });
+    
+    tileDiv.addEventListener('mouseenter', function() {
+      console.log('Mouse üzerinde:', tile); // Debug için
+    });
   }
   
   return tileDiv;
@@ -109,6 +122,8 @@ function createTileElement(tile, container = 'hand') {
 
 // Select tile
 function selectTile(tile, element) {
+  console.log('selectTile çağrıldı:', tile); // Debug için
+  
   // Deselect previous tile
   const prevSelected = document.querySelector('.tile.selected');
   if (prevSelected) {
@@ -118,7 +133,25 @@ function selectTile(tile, element) {
   // Select new tile
   element.classList.add('selected');
   selectedTile = tile;
-  addMessage(`🎯 ${tile.color} ${tile.number} taşını seçtin.`);
+  addMessage(`🎯 ${tile.color} ${tile.number} taşını seçtin. Enter/Space ile at!`);
+  
+  // Atma butonunu aktif et
+  enableDiscardButton();
+}
+
+// Atma butonu ekle
+function enableDiscardButton() {
+  // Kontrollere atma butonu ekle
+  let discardBtn = document.getElementById('discardBtn');
+  if (!discardBtn) {
+    discardBtn = document.createElement('button');
+    discardBtn.id = 'discardBtn';
+    discardBtn.className = 'btn btn-danger';
+    discardBtn.innerHTML = '🗑️ Taşı At';
+    discardBtn.onclick = discardTile;
+    document.querySelector('.controls').appendChild(discardBtn);
+  }
+  discardBtn.style.display = selectedTile ? 'block' : 'none';
 }
 
 // Render the game board
@@ -173,14 +206,17 @@ function updateGameInfo() {
   document.getElementById('deckCount').textContent = tileDeck.length;
   document.getElementById('discardCount').textContent = discardPile.length;
   
-  // Update discard pile display
+// Update discard pile display
   const discardTileElement = document.getElementById('discardTile');
   if (discardPile.length > 0) {
     const topTile = discardPile[discardPile.length - 1];
-    discardTileElement.className = `discard-tile ${topTile.color}-tile`;
     if (topTile.isJoker) {
       discardTileElement.className = 'discard-tile joker-tile';
+    } else {
+      discardTileElement.className = `discard-tile ${topTile.color}-${topTile.number}`;
     }
+  } else {
+    discardTileElement.className = 'discard-tile';
   }
 }
 
@@ -224,13 +260,23 @@ function drawFromDiscard() {
 
 // Discard selected tile
 function discardTile() {
+  console.log('discardTile çağrıldı, selectedTile:', selectedTile); // Debug için
+  
   if (!selectedTile) {
     addMessage("❌ Önce bir taş seç!");
     return;
   }
   
+  if (currentPlayerIndex !== 0) {
+    addMessage("❌ Sıra sende değil!");
+    return;
+  }
+  
   const tileIndex = players[0].hand.findIndex(t => t.id === selectedTile.id);
-  if (tileIndex === -1) return;
+  if (tileIndex === -1) {
+    addMessage("❌ Taş bulunamadı!");
+    return;
+  }
   
   players[0].hand.splice(tileIndex, 1);
   discardPile.push(selectedTile);
@@ -238,6 +284,13 @@ function discardTile() {
   addMessage(`📤 ${selectedTile.color} ${selectedTile.number} taşını attın.`);
   
   selectedTile = null;
+  
+  // Atma butonunu gizle
+  const discardBtn = document.getElementById('discardBtn');
+  if (discardBtn) {
+    discardBtn.style.display = 'none';
+  }
+  
   nextTurn();
   renderBoard();
 }
