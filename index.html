@@ -2,17 +2,35 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Test Activity Oyunu</title>
+  <title>Okey</title>
   <style>
-    body { text-align: center; font-family: sans-serif; background: #202020; color: white; }
-    button { font-size: 24px; padding: 10px 20px; margin-top: 20px; }
+    body {
+      background-image: url('images/background image.jpg');
+      background-size: cover;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    #gameBoard {
+      /* Okey board styling */
+    }
+    .tile {
+      width: 50px;
+      height: 75px;
+      background-size: cover;
+      display: inline-block;
+    }
+    /* You would need to add specific styles for each tile color */
+    .black-tile { background-image: url('images/black1.png'); }
+    .yellow-tile { background-image: url('images/yellow1.png'); }
+    .red-tile { background-image: url('images/red1.png'); }
+    .green-tile { background-image: url('images/green1.png'); }
   </style>
 </head>
 <body>
-  <h1>Activity Test Oyunu</h1>
-  <p>Puan: <span id="score">0</span></p>
-  <button id="clickBtn">Tıkla +1</button>
-
+  <h1>Discord Okey</h1>
+  <div id="gameBoard">
+    </div>
   <script src="script.js"></script>
 </body>
 </html>
