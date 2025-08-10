@@ -88,14 +88,21 @@ function dealTiles() {
 // Create tile element
 function createTileElement(tile, container = 'hand') {
   const tileDiv = document.createElement('div');
+  tileDiv.className = `tile in-${container}`;
   
+  // Her taş için özel görsel dosyası kullan
   if (tile.isJoker) {
-    tileDiv.className = `tile joker-tile in-${container}`;
+    tileDiv.style.backgroundImage = "url('images/okey.png')";
+    tileDiv.classList.add('joker-tile');
   } else {
-    // Her taş için özel CSS class kullan (örnek: red-7, yellow-5)
-    tileDiv.className = `tile ${tile.color}-${tile.number} in-${container}`;
-    console.log(`Taş class oluşturuldu: ${tile.color}-${tile.number}`); // Debug için
+    // Dosya adı formatı: red7.png, yellow5.png, black13.png
+    const imageFile = `${tile.color}${tile.number}.png`;
+    tileDiv.style.backgroundImage = `url('images/${imageFile}')`;
+    console.log(`Görsel yüklendi: images/${imageFile}`); // Debug için
   }
+  
+  tileDiv.style.backgroundSize = 'cover';
+  tileDiv.style.backgroundPosition = 'center';
   
   tileDiv.dataset.tileId = tile.id;
   tileDiv.dataset.color = tile.color;
@@ -103,12 +110,12 @@ function createTileElement(tile, container = 'hand') {
   
   if (container === 'hand') {
     tileDiv.addEventListener('click', function() {
-      console.log('Taş tıklandı:', tile, 'Class:', tileDiv.className); // Debug için
+      console.log('Taş tıklandı:', tile, 'Görsel:', `images/${tile.color}${tile.number}.png`);
       selectTile(tile, tileDiv);
     });
     
     tileDiv.addEventListener('mouseenter', function() {
-      console.log('Mouse üzerinde:', tile); // Debug için
+      console.log('Mouse üzerinde:', tile);
     });
   }
   
@@ -201,17 +208,20 @@ function updateGameInfo() {
   document.getElementById('deckCount').textContent = tileDeck.length;
   document.getElementById('discardCount').textContent = discardPile.length;
   
-// Update discard pile display
+  // Update discard pile display
   const discardTileElement = document.getElementById('discardTile');
   if (discardPile.length > 0) {
     const topTile = discardPile[discardPile.length - 1];
     if (topTile.isJoker) {
-      discardTileElement.className = 'discard-tile joker-tile';
+      discardTileElement.style.backgroundImage = "url('images/okey.png')";
     } else {
-      discardTileElement.className = `discard-tile ${topTile.color}-${topTile.number}`;
+      const imageFile = `${topTile.color}${topTile.number}.png`;
+      discardTileElement.style.backgroundImage = `url('images/${imageFile}')`;
     }
+    discardTileElement.style.backgroundSize = 'cover';
+    discardTileElement.style.backgroundPosition = 'center';
   } else {
-    discardTileElement.className = 'discard-tile';
+    discardTileElement.style.backgroundImage = 'none';
   }
 }
 
