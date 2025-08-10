@@ -116,62 +116,51 @@ h1 {
   border-color: #20c997;
 }
 
-/* Tile color classes - her taş için ayrı görsel */
-.black-1 { background-image: url('images/black1.png'); }
-.black-2 { background-image: url('images/black2.png'); }
-.black-3 { background-image: url('images/black3.png'); }
-.black-4 { background-image: url('images/black4.png'); }
-.black-5 { background-image: url('images/black5.png'); }
-.black-6 { background-image: url('images/black6.png'); }
-.black-7 { background-image: url('images/black7.png'); }
-.black-8 { background-image: url('images/black8.png'); }
-.black-9 { background-image: url('images/black9.png'); }
-.black-10 { background-image: url('images/black10.png'); }
-.black-11 { background-image: url('images/black11.png'); }
-.black-12 { background-image: url('images/black12.png'); }
-.black-13 { background-image: url('images/black13.png'); }
+.tile {
+  width: 45px;
+  height: 65px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+}
 
-.yellow-1 { background-image: url('images/yellow1.png'); }
-.yellow-2 { background-image: url('images/yellow2.png'); }
-.yellow-3 { background-image: url('images/yellow3.png'); }
-.yellow-4 { background-image: url('images/yellow4.png'); }
-.yellow-5 { background-image: url('images/yellow5.png'); }
-.yellow-6 { background-image: url('images/yellow6.png'); }
-.yellow-7 { background-image: url('images/yellow7.png'); }
-.yellow-8 { background-image: url('images/yellow8.png'); }
-.yellow-9 { background-image: url('images/yellow9.png'); }
-.yellow-10 { background-image: url('images/yellow10.png'); }
-.yellow-11 { background-image: url('images/yellow11.png'); }
-.yellow-12 { background-image: url('images/yellow12.png'); }
-.yellow-13 { background-image: url('images/yellow13.png'); }
+.tile:hover {
+  transform: translateY(-5px);
+  border-color: #FFD700;
+  box-shadow: 2px 8px 16px rgba(255, 215, 0, 0.3);
+}
 
-.red-1 { background-image: url('images/red1.png'); }
-.red-2 { background-image: url('images/red2.png'); }
-.red-3 { background-image: url('images/red3.png'); }
-.red-4 { background-image: url('images/red4.png'); }
-.red-5 { background-image: url('images/red5.png'); }
-.red-6 { background-image: url('images/red6.png'); }
-.red-7 { background-image: url('images/red7.png'); }
-.red-8 { background-image: url('images/red8.png'); }
-.red-9 { background-image: url('images/red9.png'); }
-.red-10 { background-image: url('images/red10.png'); }
-.red-11 { background-image: url('images/red11.png'); }
-.red-12 { background-image: url('images/red12.png'); }
-.red-13 { background-image: url('images/red13.png'); }
+.tile.selected {
+  border-color: #FF6B6B;
+  transform: translateY(-8px);
+  box-shadow: 2px 8px 16px rgba(255, 107, 107, 0.4);
+}
 
-.green-1 { background-image: url('images/green1.png'); }
-.green-2 { background-image: url('images/green2.png'); }
-.green-3 { background-image: url('images/green3.png'); }
-.green-4 { background-image: url('images/green4.png'); }
-.green-5 { background-image: url('images/green5.png'); }
-.green-6 { background-image: url('images/green6.png'); }
-.green-7 { background-image: url('images/green7.png'); }
-.green-8 { background-image: url('images/green8.png'); }
-.green-9 { background-image: url('images/green9.png'); }
-.green-10 { background-image: url('images/green10.png'); }
-.green-11 { background-image: url('images/green11.png'); }
-.green-12 { background-image: url('images/green12.png'); }
-.green-13 { background-image: url('images/green13.png'); }
+.tile.in-hand {
+  cursor: pointer;
+}
+
+.tile.in-discard {
+  cursor: pointer;
+  border-color: #28a745;
+}
+
+.tile.in-discard:hover {
+  border-color: #20c997;
+}
+
+.joker-tile {
+  background: linear-gradient(45deg, #FFD700, #FF6B6B, #4ECDC4, #45B7D1);
+  background-size: 200% 200%;
+  animation: rainbow 2s ease infinite;
+}
 
 .joker-tile {
   background: linear-gradient(45deg, #FFD700, #FF6B6B, #4ECDC4, #45B7D1);
