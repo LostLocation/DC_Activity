@@ -1,0 +1,12 @@
+{
+  "name": "Test Activity Game",
+  "type": "embedded_app",
+  "application_id": "1381071634852610129",
+  "build_id": "1",
+  "description": "Test amaçlı basit activity oyunu.",
+  "icon": "icon.png",
+  "install_params": {
+    "scopes": ["applications.commands"]
+  },
+  "permissions": []
+}
