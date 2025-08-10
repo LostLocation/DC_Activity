@@ -94,21 +94,16 @@ function createTileElement(tile, container = 'hand') {
   } else {
     // Her taş için özel CSS class kullan (örnek: red-7, yellow-5)
     tileDiv.className = `tile ${tile.color}-${tile.number} in-${container}`;
+    console.log(`Taş class oluşturuldu: ${tile.color}-${tile.number}`); // Debug için
   }
   
   tileDiv.dataset.tileId = tile.id;
   tileDiv.dataset.color = tile.color;
   tileDiv.dataset.number = tile.number;
   
-  // Sayı göstermeye gerek yok, görsel zaten var
-  // const numberDiv = document.createElement('div');
-  // numberDiv.className = 'tile-number';
-  // numberDiv.textContent = tile.isJoker ? '🃏' : tile.number;
-  // tileDiv.appendChild(numberDiv);
-  
   if (container === 'hand') {
     tileDiv.addEventListener('click', function() {
-      console.log('Taş tıklandı:', tile); // Debug için
+      console.log('Taş tıklandı:', tile, 'Class:', tileDiv.className); // Debug için
       selectTile(tile, tileDiv);
     });
     
