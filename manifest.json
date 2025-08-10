@@ -1,9 +1,9 @@
 {
-  "name": "Test Activity Game",
+  "name": "Okey",
   "type": "embedded_app",
   "application_id": "1381071634852610129",
   "build_id": "1",
-  "description": "Test amaçlı basit activity oyunu.",
+  "description": "Discord'da Okey oynamak için bir aktivite.",
   "icon": "icon.png",
   "launch_url": "https://lostlocation.github.io/discord-activity-test/index.html",
   "install_params": {
@@ -11,3 +11,4 @@
   },
   "permissions": []
 }
+
